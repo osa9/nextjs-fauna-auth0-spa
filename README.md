@@ -52,9 +52,9 @@ Set FaunaDB Admin key to FAUNA_SECRET environment variable.
 
 ### Setup Environment
 ```
-$ cp .env .env.local
+$ cp .env.example .env
 ```
-Edit .env.local
+Edit .env
 
 ```
 AUTH0_DOMAIN=<TENANT>.auth0.com

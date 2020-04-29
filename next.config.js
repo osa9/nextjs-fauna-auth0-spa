@@ -1,7 +1,3 @@
-const path = require('path')
-
-// If both file have same variable, the variable of .env.local is used.
-require('dotenv').config({ path: path.resolve(process.cwd(), '.env.local')})
 require('dotenv').config()
 
 module.exports = {
