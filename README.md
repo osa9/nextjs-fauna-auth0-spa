@@ -10,7 +10,7 @@ Forked from [Next.js FaunaDB Graphql Starter Example](https://github.com/zeit/ne
 ### Configure FaunaDB
 #### Create Collection
 Login into [FaunaDB DashBoard](https://dashboard.fauna.com/) and create Database.  
-Move to GRAPHQL menu and update schema with [schema.gql](./resources/schema.gql)
+Move to GRAPHQL menu and update schema with [schema.gql](./resources/fauna/schema.gql)
 
 #### Create Roles
 Move to SECURITY menu and create roles.
@@ -38,10 +38,11 @@ In SECURITY menu, create two keys.
 
 ### Configure Auth0
 #### Setup providers
-Login [Auth0](https://manage.auth0.com/dashboard/) and setup providers. This example assumes that auth providers returns trusted email address. (e.g. Google)  
+Login [Auth0](https://manage.auth0.com/dashboard/) and setup providers.  
+This example assumes that auth providers returns trusted email address. (e.g. Google)  
 
 #### Configure application
-See [react-use-auth configuration checklist](https://docs.fauna.com/fauna/current/tutorials/authentication/abac)
+See [react-use-auth configuration checklist](https://github.com/Swizec/useAuth#checklist-for-configuring-auth0)
 
 #### Setup rules
 Create Rule for generating FaunaDB user token on auth0 login. ([Example](resources/auth0/login-fauna-on-login-auth0.js))  
@@ -69,4 +70,4 @@ FAUNA_ANONYMOUS_KEY=<KEY> # FaunaDB Anonymous key
 
 # See also
 - [FaunaDB Official Document: Attribute-based access control (ABAC)](https://docs.fauna.com/fauna/current/tutorials/authentication/abac)
-- [Using FaunaDB with an Identity Provider](https://www.felix-gehring.de/articles/2020/01/28/using-faunadb-with-an-identity-provider/)
+- [Blog: Using FaunaDB with an Identity Provider](https://www.felix-gehring.de/articles/2020/01/28/using-faunadb-with-an-identity-provider/)
