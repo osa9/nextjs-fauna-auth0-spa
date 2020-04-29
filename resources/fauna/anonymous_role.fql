@@ -1,0 +1,39 @@
+{
+  ref: Role("Anonymous"),
+  ts: 1588073634705000,
+  name: "Anonymous",
+  privileges: [
+    {
+      resource: Collection("User"),
+      actions: {
+        read: true,
+        write: false,
+        create: false,
+        delete: false,
+        history_read: false,
+        history_write: false,
+        unrestricted_read: false
+      }
+    },
+    {
+      resource: Collection("GuestbookEntry"),
+      actions: {
+        read: true,
+        write: false,
+        create: false,
+        delete: false,
+        history_read: false,
+        history_write: false,
+        unrestricted_read: false
+      }
+    },
+    {
+      resource: Index("entries"),
+      actions: {
+        unrestricted_read: false,
+        read: true
+      }
+    }
+  ],
+  membership: []
+}

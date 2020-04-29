@@ -1,0 +1,16 @@
+type User {
+  email: String!
+  stories: [GuestbookEntry] @relation
+  picture: String
+  isAdmin: Boolean!
+}
+
+type GuestbookEntry {
+  story: String!
+  owner: User
+}
+
+type Query {
+  entries: [GuestbookEntry]
+  usersByEmail(email: String!): [User]
+}

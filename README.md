@@ -1,30 +1,72 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/zeit/next.js/tree/canary/packages/create-next-app).
+# Next.js example with Auth0 and FaunaDB SPA
+Next.js & Auth0 & FaunaDB & GraphQL & SPA
+
+
+Forked from [Next.js FaunaDB Graphql Starter Example](https://github.com/zeit/next.js/tree/canary/examples/with-graphql-faunadb)
+
+![Demo SS](resources/demo_ss.png)
 
 ## Getting Started
+### Configure FaunaDB
+#### Create Collection
+Login into [FaunaDB DashBoard](https://dashboard.fauna.com/) and create Database.  
+Move to GRAPHQL menu and update schema with [schema.gql](./resources/schema.gql)
 
-First, run the development server:
+#### Create Roles
+Move to SECURITY menu and create roles.
 
-```bash
-npm run dev
-# or
-yarn dev
+- ``Anonymous`` can read User/GuestbookEntry and get entry list.
+![Anonymous Role](resources/fauna/anonymous_role_ss.png)
+
+- ``LoggedInUser`` can read User/GuestbookEntry and can create/update/delete entry they own and get entry list.
+![User Role](resources/fauna/user_role_ss1.png)
+Just remove comment tag in Write/Create/Delete rules :)  
+![User Role](resources/fauna/user_role_ss2.png)
+Add membership to User collection.
+![User Role](resources/fauna/user_role_ss3.png)
+
+
+For details, see my configuration examples [anonymous_role.fql](resources/fauna/anonymous_role.fql), [user_role.fql](resources/fauna/user_role.fql), and [official document](https://docs.fauna.com/fauna/current/tutorials/authentication/abac)
+
+#### Generate server/client keys
+In SECURITY menu, create two keys.
+
+- ```Admin``` server key to generate user token on Auth0 login
+- ```Anonymous``` client key to get entries for non logged in user 
+
+![Keys](resources/fauna/keys.png)
+
+### Configure Auth0
+#### Setup providers
+Login [Auth0](https://manage.auth0.com/dashboard/) and setup providers. This example assumes that auth providers returns trusted email address. (e.g. Google)  
+
+#### Configure application
+See [react-use-auth configuration checklist](https://docs.fauna.com/fauna/current/tutorials/authentication/abac)
+
+#### Setup rules
+Create Rule for generating FaunaDB user token on auth0 login. ([Example](resources/auth0/login-fauna-on-login-auth0.js))  
+Set FaunaDB Admin key to FAUNA_SECRET environment variable.
+
+![Auth0 Rule](resources/auth0/auth0_ss.png)
+
+### Setup Environment
+```
+$ cp .env .env.local
+```
+Edit .env.local
+
+```
+AUTH0_DOMAIN=<TENANT>.auth0.com
+AUTH0_CLIENT_ID=<TOKEN> 
+FAUNA_ANONYMOUS_KEY=<KEY> # FaunaDB Anonymous key
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Run locally
+```
+  $ yarn
+  $ yarn dev
+```
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/zeit/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on ZEIT Now
-
-The easiest way to deploy your Next.js app is to use the [ZEIT Now Platform](https://zeit.co/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+# See also
+- [FaunaDB Official Document: Attribute-based access control (ABAC)](https://docs.fauna.com/fauna/current/tutorials/authentication/abac)
+- [Using FaunaDB with an Identity Provider](https://www.felix-gehring.de/articles/2020/01/28/using-faunadb-with-an-identity-provider/)

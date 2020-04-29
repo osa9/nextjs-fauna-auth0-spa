@@ -1,0 +1,64 @@
+{
+  ref: Role("LoggedInUser"),
+  ts: 1588073671980000,
+  name: "LoggedInUser",
+  privileges: [
+    {
+      resource: Collection("GuestbookEntry"),
+      actions: {
+        read: true,
+        write: Query(
+          Lambda(
+            ["oldData", "newData"],
+            And(
+              Equals(Identity(), Select(["data", "owner"], Var("oldData"))),
+              Equals(
+                Select(["data", "owner"], Var("oldData")),
+                Select(["data", "owner"], Var("newData"))
+              )
+            )
+          )
+        ),
+        create: Query(
+          Lambda(
+            "values",
+            Equals(Identity(), Select(["data", "owner"], Var("values")))
+          )
+        ),
+        delete: Query(
+          Lambda(
+            "ref",
+            Equals(Identity(), Select(["data", "owner"], Get(Var("ref"))))
+          )
+        ),
+        history_read: false,
+        history_write: false,
+        unrestricted_read: false
+      }
+    },
+    {
+      resource: Collection("User"),
+      actions: {
+        read: true,
+        write: false,
+        create: false,
+        delete: false,
+        history_read: false,
+        history_write: false,
+        unrestricted_read: false
+      }
+    },
+    {
+      resource: Index("entries"),
+      actions: {
+        unrestricted_read: false,
+        read: true
+      }
+    }
+  ],
+  membership: [
+    {
+      resource: Collection("User")
+    }
+  ]
+}
