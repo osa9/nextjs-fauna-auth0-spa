@@ -68,6 +68,12 @@ FAUNA_ANONYMOUS_KEY=<KEY> # FaunaDB Anonymous key
   $ yarn dev
 ```
 
+### Deploy
+This example is fully SPA, so you can deploy to static file hosting, like Netlify!  
+This is example deploy configuration on Netlify
+![NetlifyExample](resources/demo_deploy.png)
+
+
 # See also
 - [FaunaDB Official Document: Attribute-based access control (ABAC)](https://docs.fauna.com/fauna/current/tutorials/authentication/abac)
 - [Blog: Using FaunaDB with an Identity Provider](https://www.felix-gehring.de/articles/2020/01/28/using-faunadb-with-an-identity-provider/)
